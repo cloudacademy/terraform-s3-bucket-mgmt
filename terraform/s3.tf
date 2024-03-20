@@ -42,8 +42,16 @@ resource "aws_s3_bucket_acl" "bucket1" {
   acl    = "public-read"
 }
 
-resource "aws_s3_bucket_lifecycle_configuration" "bucket-config" {
+resource "aws_s3_bucket_versioning" "bucket1" {
   bucket = aws_s3_bucket.bucket1.id
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
+
+resource "aws_s3_bucket_lifecycle_configuration" "bucket-config" {
+  bucket     = aws_s3_bucket.bucket1.id
+  depends_on = [aws_s3_bucket_versioning.bucket1]
 
   rule {
     id = "log"
@@ -84,7 +92,26 @@ resource "aws_s3_bucket_lifecycle_configuration" "bucket-config" {
     }
 
     expiration {
-      date = "2023-01-13T00:00:00Z"
+      days = 90
+    }
+
+    status = "Enabled"
+  }
+
+  rule {
+    id = "config"
+
+    filter {
+      prefix = "config/"
+    }
+
+    noncurrent_version_expiration {
+      noncurrent_days = 90
+    }
+
+    noncurrent_version_transition {
+      noncurrent_days = 30
+      storage_class   = "STANDARD_IA"
     }
 
     status = "Enabled"
