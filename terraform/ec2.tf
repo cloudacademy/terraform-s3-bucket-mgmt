@@ -51,14 +51,14 @@ resource "aws_vpc_endpoint" "s3" {
   service_name = "com.amazonaws.us-west-2.s3"
 }
 
-resource "aws_ec2_instance_connect_endpoint" "instance_connect_ep" {
-  subnet_id          = aws_subnet.private.id
-  security_group_ids = [aws_security_group.ssh.id]
-}
-
 resource "aws_vpc_endpoint_route_table_association" "s3" {
   route_table_id  = aws_route_table.private.id
   vpc_endpoint_id = aws_vpc_endpoint.s3.id
+}
+
+resource "aws_ec2_instance_connect_endpoint" "instance_connect_ep" {
+  subnet_id          = aws_subnet.private.id
+  security_group_ids = [aws_security_group.ssh.id]
 }
 
 data "aws_ami" "amzn-linux-2023-ami" {
@@ -81,9 +81,21 @@ resource "aws_iam_policy" "ec2_lab_policy" {
       {
         Effect = "Allow",
         Action = [
+          "s3:ListBuckets",
+        ],
+        Resource = [
+          "*"
+        ]
+      },
+      {
+        Effect = "Allow",
+        Action = [
           "s3:*"
         ],
-        Resource = "*"
+        Resource = [
+          aws_s3_bucket.bucket1.arn,
+          "${aws_s3_bucket.bucket1.arn}/*",
+        ]
       }
     ]
   })

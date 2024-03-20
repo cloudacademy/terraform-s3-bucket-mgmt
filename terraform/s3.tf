@@ -1,6 +1,6 @@
 locals {
   s3 = {
-    bucket_name_prefix = "cloudacademy"
+    bucket_name_prefix = "cloudacademy-lab-bucket-"
   }
 }
 
