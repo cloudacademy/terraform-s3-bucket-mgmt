@@ -81,7 +81,7 @@ resource "aws_iam_policy" "ec2_lab_policy" {
       {
         Effect = "Allow",
         Action = [
-          "s3:ListBuckets",
+          "s3:List*",
         ],
         Resource = [
           "*"
