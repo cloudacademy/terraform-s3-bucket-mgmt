@@ -93,8 +93,8 @@ resource "aws_iam_policy" "ec2_lab_policy" {
           "s3:*"
         ],
         Resource = [
-          aws_s3_bucket.bucket1.arn,
-          "${aws_s3_bucket.bucket1.arn}/*",
+          aws_s3_bucket.bucket.arn,
+          "${aws_s3_bucket.bucket.arn}/*",
         ]
       }
     ]
