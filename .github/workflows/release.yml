@@ -22,7 +22,7 @@ jobs:
       - name: Package
         run: |
           echo packaging...
-          tar -czf terraform-s3-${{ env.RELEASE_VERSION }}.tar.gz terraform
+          tar -czf terraform-s3-${{ env.RELEASE_VERSION }}.tar.gz terraform labfiles
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
