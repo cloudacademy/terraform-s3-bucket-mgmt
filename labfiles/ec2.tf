@@ -132,9 +132,9 @@ resource "aws_instance" "lab" {
   ami           = data.aws_ami.amzn-linux-2023-ami.id
   instance_type = "t3.micro"
 
-  subnet_id            = aws_subnet.private.id
-  security_groups      = [aws_security_group.ssh.id]
-  iam_instance_profile = aws_iam_instance_profile.ec2_lab.name
+  subnet_id              = aws_subnet.private.id
+  vpc_security_group_ids = [aws_security_group.ssh.id]
+  iam_instance_profile   = aws_iam_instance_profile.ec2_lab.name
 
   credit_specification {
     cpu_credits = "standard"
