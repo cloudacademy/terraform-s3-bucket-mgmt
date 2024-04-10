@@ -49,6 +49,10 @@ resource "aws_security_group" "ssh" {
 resource "aws_vpc_endpoint" "s3" {
   vpc_id       = aws_vpc.lab.id
   service_name = "com.amazonaws.us-west-2.s3"
+
+  tags = {
+    Environment = "S3"
+  }
 }
 
 resource "aws_vpc_endpoint_route_table_association" "s3" {
