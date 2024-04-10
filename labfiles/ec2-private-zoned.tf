@@ -85,20 +85,10 @@ resource "aws_iam_policy" "ec2_lab_policy" {
       {
         Effect = "Allow",
         Action = [
-          "s3:List*",
+          "s3:*",
         ],
         Resource = [
           "*"
-        ]
-      },
-      {
-        Effect = "Allow",
-        Action = [
-          "s3:*"
-        ],
-        Resource = [
-          aws_s3_bucket.bucket.arn,
-          "${aws_s3_bucket.bucket.arn}/*",
         ]
       }
     ]
