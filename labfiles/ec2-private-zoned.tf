@@ -75,51 +75,9 @@ data "aws_ami" "amzn-linux-2023-ami" {
   }
 }
 
-resource "aws_iam_policy" "ec2_lab_policy" {
-  name = "ec2-lab-policy"
-
-  path = "/"
-  policy = jsonencode({
-    Version = "2012-10-17",
-    Statement = [
-      {
-        Effect = "Allow",
-        Action = [
-          "s3:*",
-        ],
-        Resource = [
-          "*"
-        ]
-      }
-    ]
-  })
-}
-
-resource "aws_iam_role" "ec2_lab_role" {
-  name = "ec2-lab-role"
-
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17",
-    Statement = [
-      {
-        Effect = "Allow",
-        Action = "sts:AssumeRole",
-        Principal = {
-          Service = "ec2.amazonaws.com"
-        }
-      }
-    ]
-  })
-}
-
-resource "aws_iam_role_policy_attachment" "ec2_lab" {
-  role       = aws_iam_role.ec2_lab_role.name
-  policy_arn = aws_iam_policy.ec2_lab_policy.arn
-}
-
 resource "aws_iam_instance_profile" "ec2_lab" {
-  name = "ec2-lab-profile"
-  role = aws_iam_role.ec2_lab_role.name
+  name = "ec2-labinstance-profile"
+  role = "ec2-labinstance-role"
 }
 
 resource "aws_instance" "lab" {
