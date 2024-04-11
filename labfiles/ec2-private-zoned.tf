@@ -21,6 +21,10 @@ resource "aws_subnet" "private" {
 
 resource "aws_route_table" "private" {
   vpc_id = aws_vpc.lab.id
+
+  tags = {
+    Name = "private-zone"
+  }
 }
 
 resource "aws_route_table_association" "private" {
