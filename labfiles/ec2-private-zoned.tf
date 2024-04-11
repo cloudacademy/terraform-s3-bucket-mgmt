@@ -97,6 +97,7 @@ resource "aws_instance" "lab" {
   }
 
   tags = {
-    Name = "lab-instance"
+    name = "lab-instance"
+    type = "privately-zoned"
   }
 }
