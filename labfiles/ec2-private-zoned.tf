@@ -5,7 +5,7 @@ resource "aws_vpc" "lab" {
   enable_dns_support   = true
 
   tags = {
-    Name = "cloudacademy-lab"
+    name = "cloudacademy-lab"
   }
 }
 
@@ -15,7 +15,7 @@ resource "aws_subnet" "private" {
   availability_zone = "us-west-2a"
 
   tags = {
-    Name = "private"
+    name = "private"
   }
 }
 
@@ -23,7 +23,7 @@ resource "aws_route_table" "private" {
   vpc_id = aws_vpc.lab.id
 
   tags = {
-    Name = "private-zone"
+    name = "private-zone"
   }
 }
 
@@ -55,7 +55,7 @@ resource "aws_vpc_endpoint" "s3" {
   service_name = "com.amazonaws.us-west-2.s3"
 
   tags = {
-    Environment = "S3"
+    environment = "S3"
   }
 }
 
@@ -97,7 +97,7 @@ resource "aws_instance" "lab" {
   }
 
   tags = {
-    Name = "lab-instance"
-    Type = "privately-zoned"
+    name = "lab-instance"
+    type = "privately-zoned"
   }
 }
