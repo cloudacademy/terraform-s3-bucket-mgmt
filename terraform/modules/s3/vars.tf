@@ -13,3 +13,21 @@ variable "core_backups_retention" {
   type        = string
   default     = "NOBACKUP"
 }
+
+variable "lifecycle_rules" {
+  description = "The lifecycle rules for the bucket"
+  type = list(object({
+    id = string
+    filter = object({
+      prefix = string
+    })
+    expiration = list(object({
+      days = number
+    }))
+    transitions = optional(list(object({
+      storage_class = string
+      days          = number
+    })))
+  }))
+  default = null
+}

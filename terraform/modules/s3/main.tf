@@ -64,3 +64,34 @@ resource "aws_s3_bucket_lifecycle_configuration" "bucket" {
     }
   }
 }
+
+resource "aws_s3_bucket_lifecycle_configuration" "bucket-config" {
+  count  = var.lifecycle_rules == null ? 0 : 1
+  bucket = aws_s3_bucket.bucket.id
+
+  dynamic "rule" {
+    for_each = var.lifecycle_rules == null ? [] : var.lifecycle_rules
+
+    content {
+      id     = rule.value.id
+      status = "Enabled"
+
+      filter {
+        prefix = rule.value.filter.prefix
+      }
+
+      expiration {
+        days = rule.value.expiration[0].days
+      }
+
+      dynamic "transition" {
+        for_each = rule.value.transitions == null ? [] : rule.value.transitions
+
+        content {
+          storage_class = transition.value.storage_class
+          days          = transition.value.days
+        }
+      }
+    }
+  }
+}
