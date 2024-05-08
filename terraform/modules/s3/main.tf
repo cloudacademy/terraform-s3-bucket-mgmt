@@ -8,9 +8,7 @@ resource "aws_s3_bucket" "bucket" {
   bucket_prefix = local.s3.bucket_name_prefix
 
   tags = {
-    org         = "cloudacademy"
-    environment = "dev"
-    backup      = var.core_backups_retention
+    #BUCKET_TAGS_GO_HERE
   }
 }
 
