@@ -8,7 +8,7 @@ resource "aws_s3_bucket" "bucket" {
   bucket_prefix = local.s3.bucket_name_prefix
 
   tags = {
-    org         = "jpmc"
+    org         = "cloudacademy"
     environment = "dev"
     backup      = var.core_backups_retention
   }
@@ -49,19 +49,6 @@ resource "aws_s3_bucket_ownership_controls" "bucket" {
 
   rule {
     object_ownership = "ObjectWriter"
-  }
-}
-
-resource "aws_s3_bucket_lifecycle_configuration" "bucket" {
-  bucket = aws_s3_bucket.bucket.id
-
-  rule {
-    id     = "rule-1"
-    status = "Enabled"
-
-    abort_incomplete_multipart_upload {
-      days_after_initiation = 7
-    }
   }
 }
 
