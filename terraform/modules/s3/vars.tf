@@ -14,6 +14,12 @@ variable "core_backups_retention" {
   default     = "NOBACKUP"
 }
 
+variable "core_backups_retention_pitr" {
+  description = "The retention PITR policy for backups"
+  type        = string
+  default     = "NOBACKUP"
+}
+
 variable "lifecycle_rules" {
   description = "The lifecycle rules for the bucket"
   type = list(object({
