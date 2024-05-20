@@ -27,13 +27,14 @@ variable "lifecycle_rules" {
     filter = object({
       prefix = string
     })
-    expiration = list(object({
+    expiration = optional(list(object({
       days = number
-    }))
+    })))
     transitions = optional(list(object({
       storage_class = string
       days          = number
     })))
+    noncurrent_version_expiration = optional(number)
   }))
   default = null
 }

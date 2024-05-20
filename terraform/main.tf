@@ -42,6 +42,13 @@ module "s3" {
           days : 365
         }
       ]
-    }
+    },
+    {
+      id : "expire-noncurrent-folder2"
+      filter = {
+        prefix = "folder2/"
+      }
+      noncurrent_version_expiration : 10
+    },
   ]
 }

@@ -65,8 +65,12 @@ resource "aws_s3_bucket_lifecycle_configuration" "bucket-config" {
         prefix = rule.value.filter.prefix
       }
 
-      expiration {
-        days = rule.value.expiration[0].days
+      dynamic "expiration" {
+        for_each = rule.value.expiration == null ? [] : rule.value.expiration
+
+        content {
+          days = expiration.value.days
+        }
       }
 
       dynamic "transition" {
@@ -75,6 +79,14 @@ resource "aws_s3_bucket_lifecycle_configuration" "bucket-config" {
         content {
           storage_class = transition.value.storage_class
           days          = transition.value.days
+        }
+      }
+
+      dynamic "noncurrent_version_expiration" {
+        for_each = rule.value.noncurrent_version_expiration == null ? [] : [rule.value.noncurrent_version_expiration]
+
+        content {
+          noncurrent_days = noncurrent_version_expiration.value
         }
       }
     }
