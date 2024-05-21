@@ -1,11 +1,21 @@
+resource "random_string" "bucket_suffix" {
+  length  = 12
+  special = false
+  upper   = false
+
+  keepers = {
+    lab_version = var.lab_version
+  }
+}
+
 locals {
   s3 = {
-    bucket_name_prefix = "jp-"
+    bucket_name = "app-id-12345-dep-id-12345-uu-id-${random_string.bucket_suffix.result}"
   }
 }
 
 resource "aws_s3_bucket" "bucket" {
-  bucket_prefix = local.s3.bucket_name_prefix
+  bucket = local.s3.bucket_name
 
   tags = {
     #BUCKET_TAGS_GO_HERE
@@ -46,7 +56,7 @@ resource "aws_s3_bucket_ownership_controls" "bucket" {
   bucket = aws_s3_bucket.bucket.id
 
   rule {
-    object_ownership = "ObjectWriter"
+    object_ownership = "BucketOwnerEnforced"
   }
 }
 

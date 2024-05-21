@@ -1,7 +1,8 @@
-# variable "version" {
-#   description = "The module version"
-#   type        = string
-# }
+variable "lab_version" {
+  description = "The lab version"
+  type        = string
+  default     = "1.20.0"
+}
 
 variable "kms_key_arn" {
   description = "The ARN for the KMS key to encrypt the file system at rest"
